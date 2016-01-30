@@ -19,7 +19,12 @@ var cubeGeometry;
 var planeGeometry;
 var cubeMaterial;
 var planeMaterial;
-var cube;
+var head;
+var body;
+var leftArm;
+var rightArm;
+var leftLeg;
+var rightLeg;
 var plane;
 var spotLight;
 var pointLight;
@@ -31,13 +36,66 @@ function init() {
     scene = new Scene();
     setupRenderer(); // setup the default renderer
     setupCamera(); // setup the camera
-    //Add a Cube to the Scene
-    cubeGeometry = new CubeGeometry(6, 6, 6);
+    //Add a head to the Scene
+    cubeGeometry = new CubeGeometry(0.5, 0.5, 0.5);
     cubeMaterial = new LambertMaterial({ color: 0x00ff00, opacity: 0.5 });
-    cube = new Mesh(cubeGeometry, cubeMaterial);
-    cube.castShadow = true;
-    scene.add(cube);
-    console.log("Added Cube Primative to scene...");
+    head = new Mesh(cubeGeometry, cubeMaterial);
+    head.position.x = 0;
+    head.position.y = 0;
+    head.position.z = 4.75;
+    head.castShadow = true;
+    scene.add(head);
+    console.log("Added head to scene...");
+    //Add a body to the Scene
+    cubeGeometry = new CubeGeometry(1, 0.5, 1.25);
+    cubeMaterial = new LambertMaterial({ color: 0x00ff00, opacity: 0.5 });
+    body = new Mesh(cubeGeometry, cubeMaterial);
+    body.position.x = 0;
+    body.position.y = 0;
+    body.position.z = 3;
+    body.castShadow = true;
+    scene.add(body);
+    console.log("Added body to scene...");
+    //Add a leftArm to the Scene
+    cubeGeometry = new CubeGeometry(0.25, 0.25, 1);
+    cubeMaterial = new LambertMaterial({ color: 0x00ff00, opacity: 0.5 });
+    leftArm = new Mesh(cubeGeometry, cubeMaterial);
+    leftArm.position.x = 1.25;
+    leftArm.position.y = 0;
+    leftArm.position.z = 3;
+    leftArm.castShadow = true;
+    scene.add(leftArm);
+    console.log("Added leftArm to scene...");
+    //Add a rightArm to the Scene
+    cubeGeometry = new CubeGeometry(0.25, 0.25, 1);
+    cubeMaterial = new LambertMaterial({ color: 0x00ff00, opacity: 0.5 });
+    rightArm = new Mesh(cubeGeometry, cubeMaterial);
+    rightArm.position.x = -1.25;
+    rightArm.position.y = 0;
+    rightArm.position.z = 3;
+    rightArm.castShadow = true;
+    scene.add(rightArm);
+    console.log("Added rightArm to scene...");
+    //Add a leftLeg to the Scene
+    cubeGeometry = new CubeGeometry(0.25, 0.25, 1);
+    cubeMaterial = new LambertMaterial({ color: 0x00ff00, opacity: 0.5 });
+    leftLeg = new Mesh(cubeGeometry, cubeMaterial);
+    leftLeg.position.x = 0.7;
+    leftLeg.position.y = 0;
+    leftLeg.position.z = 1;
+    leftLeg.castShadow = true;
+    scene.add(leftLeg);
+    console.log("Added leftLeg to scene...");
+    //Add a rightLeg to the Scene
+    cubeGeometry = new CubeGeometry(0.25, 0.25, 1);
+    cubeMaterial = new LambertMaterial({ color: 0x00ff00, opacity: 0.5 });
+    rightLeg = new Mesh(cubeGeometry, cubeMaterial);
+    rightLeg.position.x = -0.7;
+    rightLeg.position.y = 0;
+    rightLeg.position.z = 1;
+    rightLeg.castShadow = true;
+    scene.add(rightLeg);
+    console.log("Added rightLeg to scene...");
     //Add a Plane to the Scene
     planeGeometry = new PlaneGeometry(20, 20);
     planeMaterial = new LambertMaterial({ color: 0xCCCCCC, opacity: 0.5 });
@@ -79,10 +137,10 @@ function gameLoop() {
     stats.update();
     // render using requestAnimationFrame
     requestAnimationFrame(gameLoop);
-    cube.material.transparent = true;
-    cube.material.opacity = control.opacity;
-    cube.material.color = new Color(control.color);
-    cube.rotation.y += control.rotationSpeed;
+    head.material.transparent = true;
+    head.material.opacity = control.opacity;
+    head.material.color = new Color(control.color);
+    head.rotation.y += control.rotationSpeed;
     renderer.render(scene, camera);
 }
 // Setup default renderer

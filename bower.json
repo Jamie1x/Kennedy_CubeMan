@@ -13,7 +13,8 @@
     "node_modules",
     "bower_components",
     "test",
-    "tests"
+    "tests",
+    "scripts/lib"
   ],
   "dependencies": {
     "three.js": "~0.72.0",

@@ -74,22 +74,22 @@ function init() {
 	console.log("Added body to scene...");
     
     //Add a leftArm to the Scene
-	cubeGeometry = new CubeGeometry(0.5, 2, 0.5);
+	cubeGeometry = new CubeGeometry(2, 0.5, 0.5);
 	cubeMaterial = new LambertMaterial({color:0x00ff00, opacity:0.5});
 	leftArm = new Mesh(cubeGeometry, cubeMaterial);
-    leftArm.position.x = 1.25;
-    leftArm.position.y = 3;
+    leftArm.position.x = 1.75;
+    leftArm.position.y = 3.75;
     leftArm.position.z = 0;
 	leftArm.castShadow = true;
 	group.add(leftArm);//Add arm to group
 	console.log("Added leftArm to scene...");
     
     //Add a rightArm to the Scene
-	cubeGeometry = new CubeGeometry(0.5, 2, 0.5);
+	cubeGeometry = new CubeGeometry(2, 0.5, 0.5);
 	cubeMaterial = new LambertMaterial({color:0x00ff00, opacity:0.5});
 	rightArm = new Mesh(cubeGeometry, cubeMaterial);
-    rightArm.position.x = -1.25;
-    rightArm.position.y = 3;
+    rightArm.position.x = -1.75;
+    rightArm.position.y = 3.75;
     rightArm.position.z = 0;
 	rightArm.castShadow = true;
 	group.add(rightArm);//Add arm to group
@@ -141,7 +141,7 @@ function init() {
 	
 	// add extras
 	gui = new GUI();
-	control = new Control(0.005,  cubeMaterial.opacity, cubeMaterial.color.getHex());
+	control = new Control(0.005, 0.005, 0.005, cubeMaterial.color.getHex());
 	addControl(control);
 	
 	addStatsObject();
@@ -151,8 +151,9 @@ function init() {
 }
 
 function addControl(controlObject: Control):void {
-	gui.add(controlObject, 'rotationSpeed',-0.01,0.01);
-	gui.add(controlObject, 'opacity', 0.1, 1);
+	gui.add(controlObject, 'rotationSpeedx',-0.01,0.01);
+    gui.add(controlObject, 'rotationSpeedy',-0.01,0.01);
+    gui.add(controlObject, 'rotationSpeedz',-0.01,0.01);
 	gui.addColor(controlObject, 'color');
 }
 
@@ -172,31 +173,16 @@ function gameLoop():void {
 	// render using requestAnimationFrame
 	requestAnimationFrame(gameLoop);
 	
-	head.material.transparent = true;
-	head.material.opacity = control.opacity;
 	head.material.color = new Color(control.color);
-    
-    body.material.transparent = true;
-	body.material.opacity = control.opacity;
 	body.material.color = new Color(control.color);
-    
-    leftArm.material.transparent = true;
-	leftArm.material.opacity = control.opacity;
 	leftArm.material.color = new Color(control.color);
-    
-    rightArm.material.transparent = true;
-	rightArm.material.opacity = control.opacity;
 	rightArm.material.color = new Color(control.color);
-    
-    leftLeg.material.transparent = true;
-	leftLeg.material.opacity = control.opacity;
 	leftLeg.material.color = new Color(control.color);
-    
-    rightLeg.material.transparent = true;
-	rightLeg.material.opacity = control.opacity;
 	rightLeg.material.color = new Color(control.color);
     
-    group.rotation.y += control.rotationSpeed;
+    group.rotation.x += control.rotationSpeedx;
+    group.rotation.y += control.rotationSpeedy;
+    group.rotation.z += control.rotationSpeedz;
 	
 	renderer.render(scene, camera);
 }

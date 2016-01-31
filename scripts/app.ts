@@ -59,7 +59,7 @@ function init() {
     head.position.y = 4.75;
     head.position.z = 0;
 	head.castShadow = true;
-	group.add(head);
+	group.add(head);//Add head to group
 	console.log("Added head to scene...");
     
     //Add a body to the Scene
@@ -70,7 +70,7 @@ function init() {
     body.position.y = 3;
     body.position.z = 0;
 	body.castShadow = true;
-	group.add(body);
+	group.add(body); //Add body to group
 	console.log("Added body to scene...");
     
     //Add a leftArm to the Scene
@@ -81,7 +81,7 @@ function init() {
     leftArm.position.y = 3;
     leftArm.position.z = 0;
 	leftArm.castShadow = true;
-	group.add(leftArm);
+	group.add(leftArm);//Add arm to group
 	console.log("Added leftArm to scene...");
     
     //Add a rightArm to the Scene
@@ -92,7 +92,7 @@ function init() {
     rightArm.position.y = 3;
     rightArm.position.z = 0;
 	rightArm.castShadow = true;
-	group.add(rightArm);
+	group.add(rightArm);//Add arm to group
 	console.log("Added rightArm to scene...");
     
     //Add a leftLeg to the Scene
@@ -103,7 +103,7 @@ function init() {
     leftLeg.position.y = 1;
     leftLeg.position.z = 0;
 	leftLeg.castShadow = true;
-	group.add(leftLeg);
+	group.add(leftLeg);//Add leg to group
 	console.log("Added leftLeg to scene...");
     
     //Add a rightLeg to the Scene
@@ -114,9 +114,10 @@ function init() {
     rightLeg.position.y = 1;
     rightLeg.position.z = 0;
 	rightLeg.castShadow = true;
-	group.add(rightLeg);
+	group.add(rightLeg);//Add leg to group
 	console.log("Added rightLeg to scene...");
     
+    //Add person to scene
     scene.add(group);
 	
     //Add a Plane to the Scene

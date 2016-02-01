@@ -9,6 +9,7 @@ import LambertMaterial = THREE.MeshLambertMaterial;
 import Mesh = THREE.Mesh;
 import SpotLight = THREE.SpotLight;
 import PointLight = THREE.PointLight;
+import AmbientLight = THREE.AmbientLight;
 import Control = objects.Control;
 import GUI = dat.GUI;
 import Color = THREE.Color;
@@ -32,6 +33,7 @@ var rightLeg: Mesh;
 var plane: Mesh;
 var spotLight: SpotLight;
 var pointLight: PointLight;
+var ambientLight: AmbientLight;
 var control: Control;
 var gui: GUI;
 var stats:Stats;
@@ -122,26 +124,31 @@ function init() {
 	
     //Add a Plane to the Scene
 	planeGeometry = new PlaneGeometry(20, 20);
-	planeMaterial = new LambertMaterial({color:0xCCCCCC, opacity: 0.5});
+	planeMaterial = new LambertMaterial({color:0xffffff});
 	plane = new Mesh(planeGeometry, planeMaterial);
-	plane.receiveShadow = true;
 	
 	plane.rotation.x = -0.5 * Math.PI;
-	plane.position.y = -2;
 	
 	scene.add(plane);
 	console.log("Added Plane Primative to scene...");
+    
+    // Add an AmbientLight to the scene
+    ambientLight = new AmbientLight(0x909090);
+    ambientLight.castShadow = true;
+    scene.add(ambientLight);
+    console.log("Added Ambient Light to scene");
 	
 	// Add a SpotLight to the scene
 	spotLight = new SpotLight(0xffffff);
-	spotLight.position.set (10, 20, 20);
+	spotLight.position.set (5, 10, 5);
+    spotLight.rotation.set (35, 0, 35)
 	spotLight.castShadow = true;
 	scene.add(spotLight);
 	console.log("Added Spot Light to Scene");
 	
 	// add extras
 	gui = new GUI();
-	control = new Control(0.005, 0.005, 0.005, cubeMaterial.color.getHex());
+	control = new Control(0, 0, 0, cubeMaterial.color.getHex());
 	addControl(control);
 	
 	addStatsObject();

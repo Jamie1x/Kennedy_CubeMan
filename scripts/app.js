@@ -8,6 +8,7 @@ var LambertMaterial = THREE.MeshLambertMaterial;
 var Mesh = THREE.Mesh;
 var SpotLight = THREE.SpotLight;
 var PointLight = THREE.PointLight;
+var AmbientLight = THREE.AmbientLight;
 var Control = objects.Control;
 var GUI = dat.GUI;
 var Color = THREE.Color;
@@ -30,6 +31,7 @@ var rightLeg;
 var plane;
 var spotLight;
 var pointLight;
+var ambientLight;
 var control;
 var gui;
 var stats;
@@ -52,6 +54,7 @@ function init() {
     head.position.y = 4.75;
     head.position.z = 0;
     head.castShadow = true;
+    head.receiveShadow = true;
     group.add(head); //Add head to group
     console.log("Added head to scene...");
     //Add a body to the Scene
@@ -108,22 +111,26 @@ function init() {
     scene.add(group);
     //Add a Plane to the Scene
     planeGeometry = new PlaneGeometry(20, 20);
-    planeMaterial = new LambertMaterial({ color: 0xCCCCCC, opacity: 0.5 });
+    planeMaterial = new LambertMaterial({ color: 0xffffff });
     plane = new Mesh(planeGeometry, planeMaterial);
-    plane.receiveShadow = true;
     plane.rotation.x = -0.5 * Math.PI;
-    plane.position.y = -2;
     scene.add(plane);
     console.log("Added Plane Primative to scene...");
+    // Add an AmbientLight to the scene
+    ambientLight = new AmbientLight(0x909090);
+    ambientLight.castShadow = true;
+    scene.add(ambientLight);
+    console.log("Added Ambient Light to scene");
     // Add a SpotLight to the scene
     spotLight = new SpotLight(0xffffff);
-    spotLight.position.set(10, 20, 20);
+    spotLight.position.set(5, 10, 5);
+    spotLight.rotation.set(35, 0, 35);
     spotLight.castShadow = true;
     scene.add(spotLight);
     console.log("Added Spot Light to Scene");
     // add extras
     gui = new GUI();
-    control = new Control(0.005, 0.005, 0.005, cubeMaterial.color.getHex());
+    control = new Control(0, 0, 0, cubeMaterial.color.getHex());
     addControl(control);
     addStatsObject();
     document.body.appendChild(renderer.domElement);

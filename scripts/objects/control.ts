@@ -4,12 +4,14 @@ module objects {
         rotationSpeedy: number;
         rotationSpeedz: number;
 		opacity: number;
-		color: number; // hexadecimal value of the color
-		constructor(rotationSpeedx: number, rotationSpeedy: number,rotationSpeedz: number, color:number) {
+		shirtColor: number; // hexadecimal value of the color
+        pantsColor: number;
+		constructor(rotationSpeedx: number, rotationSpeedy: number,rotationSpeedz: number, shirtColor:number, pantsColor:number) {
 			this.rotationSpeedx = rotationSpeedx;
             this.rotationSpeedy = rotationSpeedy;
             this.rotationSpeedz = rotationSpeedz;
-			this.color = color;
+			this.shirtColor = shirtColor;
+            this.pantsColor = pantsColor
 		}
 	}
 }

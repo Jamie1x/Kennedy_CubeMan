@@ -3,6 +3,7 @@ var Scene = THREE.Scene;
 var Renderer = THREE.WebGLRenderer;
 var PerspectiveCamera = THREE.PerspectiveCamera;
 var CubeGeometry = THREE.CubeGeometry;
+var SphereGeometry = THREE.SphereGeometry;
 var PlaneGeometry = THREE.PlaneGeometry;
 var LambertMaterial = THREE.MeshLambertMaterial;
 var Mesh = THREE.Mesh;
@@ -19,11 +20,15 @@ var scene;
 var renderer;
 var camera;
 var cubeGeometry;
+var sphereGeometry;
 var planeGeometry;
 var cubeMaterial;
+var sphereMaterial;
 var planeMaterial;
 var head;
 var body;
+var leftSleeve;
+var rightSleeve;
 var leftArm;
 var rightArm;
 var leftLeg;
@@ -37,7 +42,7 @@ var gui;
 var stats;
 var axis;
 //var group: Group;
-var group = new THREE.Object3D();
+var person = new THREE.Object3D();
 function init() {
     // Instantiate a new Scene object
     scene = new Scene();
@@ -47,100 +52,131 @@ function init() {
     axis = new AxisHelper(20);
     scene.add(axis);
     //Add a head to the Scene
-    cubeGeometry = new CubeGeometry(1, 1, 1);
-    cubeMaterial = new LambertMaterial({ color: 0x00ff00, opacity: 0.5 });
-    head = new Mesh(cubeGeometry, cubeMaterial);
+    sphereGeometry = new SphereGeometry(0.75, 32, 32);
+    sphereMaterial = new LambertMaterial({ color: 0xffcc99 });
+    head = new Mesh(sphereGeometry, sphereMaterial);
     head.position.x = 0;
-    head.position.y = 4.75;
+    head.position.y = 4.9;
     head.position.z = 0;
     head.castShadow = true;
     head.receiveShadow = true;
-    group.add(head); //Add head to group
+    person.add(head); //Add head to group
     console.log("Added head to scene...");
     //Add a body to the Scene
     cubeGeometry = new CubeGeometry(2, 2.5, 1);
-    cubeMaterial = new LambertMaterial({ color: 0x00ff00, opacity: 0.5 });
+    cubeMaterial = new LambertMaterial({ color: 0x00ff00 });
     body = new Mesh(cubeGeometry, cubeMaterial);
     body.position.x = 0;
     body.position.y = 3;
     body.position.z = 0;
     body.castShadow = true;
-    group.add(body); //Add body to group
+    body.receiveShadow = true;
+    person.add(body); //Add body to group
     console.log("Added body to scene...");
+    //Add a leftSleeve to the scene
+    cubeGeometry = new CubeGeometry(1, 1, 1);
+    cubeMaterial = new LambertMaterial({ color: 0x00ff00 });
+    leftSleeve = new Mesh(cubeGeometry, cubeMaterial);
+    leftSleeve.position.x = 1;
+    leftSleeve.position.y = 3.75;
+    leftSleeve.position.z = 0;
+    leftSleeve.castShadow = true;
+    leftSleeve.receiveShadow = true;
+    person.add(leftSleeve); //Add sleeve to group
+    console.log("Added leftSleeve to scene...");
+    //Add a rightSleeve to the scene
+    cubeGeometry = new CubeGeometry(1, 1, 1);
+    cubeMaterial = new LambertMaterial({ color: 0x00ff00 });
+    rightSleeve = new Mesh(cubeGeometry, cubeMaterial);
+    rightSleeve.position.x = -1;
+    rightSleeve.position.y = 3.75;
+    rightSleeve.position.z = 0;
+    rightSleeve.castShadow = true;
+    rightSleeve.receiveShadow = true;
+    person.add(rightSleeve); //Add sleeve to group
+    console.log("Added rightSleeve to scene...");
     //Add a leftArm to the Scene
     cubeGeometry = new CubeGeometry(2, 0.5, 0.5);
-    cubeMaterial = new LambertMaterial({ color: 0x00ff00, opacity: 0.5 });
+    cubeMaterial = new LambertMaterial({ color: 0xffcc99 });
     leftArm = new Mesh(cubeGeometry, cubeMaterial);
     leftArm.position.x = 1.75;
     leftArm.position.y = 3.75;
     leftArm.position.z = 0;
     leftArm.castShadow = true;
-    group.add(leftArm); //Add arm to group
+    leftArm.receiveShadow = true;
+    person.add(leftArm); //Add arm to group
     console.log("Added leftArm to scene...");
     //Add a rightArm to the Scene
     cubeGeometry = new CubeGeometry(2, 0.5, 0.5);
-    cubeMaterial = new LambertMaterial({ color: 0x00ff00, opacity: 0.5 });
+    cubeMaterial = new LambertMaterial({ color: 0xffcc99 });
     rightArm = new Mesh(cubeGeometry, cubeMaterial);
     rightArm.position.x = -1.75;
     rightArm.position.y = 3.75;
     rightArm.position.z = 0;
     rightArm.castShadow = true;
-    group.add(rightArm); //Add arm to group
+    rightArm.receiveShadow = true;
+    person.add(rightArm); //Add arm to group
     console.log("Added rightArm to scene...");
     //Add a leftLeg to the Scene
     cubeGeometry = new CubeGeometry(0.5, 2, 0.5);
-    cubeMaterial = new LambertMaterial({ color: 0x00ff00, opacity: 0.5 });
+    cubeMaterial = new LambertMaterial({ color: 0x0000ff });
     leftLeg = new Mesh(cubeGeometry, cubeMaterial);
     leftLeg.position.x = 0.7;
     leftLeg.position.y = 1;
     leftLeg.position.z = 0;
     leftLeg.castShadow = true;
-    group.add(leftLeg); //Add leg to group
+    leftLeg.receiveShadow = true;
+    person.add(leftLeg); //Add leg to group
     console.log("Added leftLeg to scene...");
     //Add a rightLeg to the Scene
     cubeGeometry = new CubeGeometry(0.5, 2, 0.5);
-    cubeMaterial = new LambertMaterial({ color: 0x00ff00, opacity: 0.5 });
+    cubeMaterial = new LambertMaterial({ color: 0x0000ff });
     rightLeg = new Mesh(cubeGeometry, cubeMaterial);
     rightLeg.position.x = -0.7;
     rightLeg.position.y = 1;
     rightLeg.position.z = 0;
     rightLeg.castShadow = true;
-    group.add(rightLeg); //Add leg to group
+    rightLeg.receiveShadow = true;
+    person.add(rightLeg); //Add leg to group
     console.log("Added rightLeg to scene...");
     //Add person to scene
-    scene.add(group);
+    scene.add(person);
     //Add a Plane to the Scene
     planeGeometry = new PlaneGeometry(20, 20);
     planeMaterial = new LambertMaterial({ color: 0xffffff });
     plane = new Mesh(planeGeometry, planeMaterial);
+    plane.receiveShadow = true;
     plane.rotation.x = -0.5 * Math.PI;
     scene.add(plane);
     console.log("Added Plane Primative to scene...");
     // Add an AmbientLight to the scene
-    ambientLight = new AmbientLight(0x909090);
-    ambientLight.castShadow = true;
+    ambientLight = new AmbientLight(0x0f0f0f);
+    ambientLight.castShadow = false;
     scene.add(ambientLight);
     console.log("Added Ambient Light to scene");
     // Add a SpotLight to the scene
     spotLight = new SpotLight(0xffffff);
-    spotLight.position.set(5, 10, 5);
-    spotLight.rotation.set(35, 0, 35);
+    spotLight.position.set(10, 15, 10);
+    spotLight.target;
     spotLight.castShadow = true;
+    spotLight.shadowCameraNear = 1;
     scene.add(spotLight);
     console.log("Added Spot Light to Scene");
     // add extras
     gui = new GUI();
-    control = new Control(0, 0, 0, cubeMaterial.color.getHex());
+    control = new Control(0, 0, 0, 0xff0000, 0x0000ff);
     addControl(control);
     addStatsObject();
     document.body.appendChild(renderer.domElement);
     gameLoop(); // render the scene	
 }
+//Add controls to the controller
 function addControl(controlObject) {
     gui.add(controlObject, 'rotationSpeedx', -0.01, 0.01);
     gui.add(controlObject, 'rotationSpeedy', -0.01, 0.01);
     gui.add(controlObject, 'rotationSpeedz', -0.01, 0.01);
-    gui.addColor(controlObject, 'color');
+    gui.addColor(controlObject, 'shirtColor');
+    gui.addColor(controlObject, 'pantsColor');
 }
 function addStatsObject() {
     stats = new Stats();
@@ -155,15 +191,16 @@ function gameLoop() {
     stats.update();
     // render using requestAnimationFrame
     requestAnimationFrame(gameLoop);
-    head.material.color = new Color(control.color);
-    body.material.color = new Color(control.color);
-    leftArm.material.color = new Color(control.color);
-    rightArm.material.color = new Color(control.color);
-    leftLeg.material.color = new Color(control.color);
-    rightLeg.material.color = new Color(control.color);
-    group.rotation.x += control.rotationSpeedx;
-    group.rotation.y += control.rotationSpeedy;
-    group.rotation.z += control.rotationSpeedz;
+    //set character color from controller
+    body.material.color = new Color(control.shirtColor);
+    leftSleeve.material.color = new Color(control.shirtColor);
+    rightSleeve.material.color = new Color(control.shirtColor);
+    leftLeg.material.color = new Color(control.pantsColor);
+    rightLeg.material.color = new Color(control.pantsColor);
+    //set character rotation speed
+    person.rotation.x += control.rotationSpeedx;
+    person.rotation.y += control.rotationSpeedy;
+    person.rotation.z += control.rotationSpeedz;
     renderer.render(scene, camera);
 }
 // Setup default renderer
@@ -171,6 +208,7 @@ function setupRenderer() {
     renderer = new Renderer();
     renderer.setClearColor(0xCCCCCC, 1.0);
     renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.shadowMapType = THREE.PCFSoftShadowMap;
     renderer.shadowMapEnabled = true;
     console.log("Finished setting up Renderer...");
 }

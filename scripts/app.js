@@ -15,7 +15,6 @@ var GUI = dat.GUI;
 var Color = THREE.Color;
 var Vector3 = THREE.Vector3;
 var AxisHelper = THREE.AxisHelper;
-//import Group = THREE.Object3D;
 var scene;
 var renderer;
 var camera;
@@ -41,7 +40,6 @@ var control;
 var gui;
 var stats;
 var axis;
-//var group: Group;
 var person = new THREE.Object3D();
 function init() {
     // Instantiate a new Scene object
@@ -51,7 +49,7 @@ function init() {
     //Add an axes helper to the scene
     axis = new AxisHelper(20);
     scene.add(axis);
-    //Add a head to the Scene
+    //Create head
     sphereGeometry = new SphereGeometry(0.75, 32, 32);
     sphereMaterial = new LambertMaterial({ color: 0xffcc99 });
     head = new Mesh(sphereGeometry, sphereMaterial);
@@ -62,7 +60,7 @@ function init() {
     head.receiveShadow = true;
     person.add(head); //Add head to group
     console.log("Added head to scene...");
-    //Add a body to the Scene
+    //Create body
     cubeGeometry = new CubeGeometry(2, 2.5, 1);
     cubeMaterial = new LambertMaterial({ color: 0x00ff00 });
     body = new Mesh(cubeGeometry, cubeMaterial);
@@ -73,7 +71,7 @@ function init() {
     body.receiveShadow = true;
     person.add(body); //Add body to group
     console.log("Added body to scene...");
-    //Add a leftSleeve to the scene
+    //Create leftSleeve
     cubeGeometry = new CubeGeometry(1, 1, 1);
     cubeMaterial = new LambertMaterial({ color: 0x00ff00 });
     leftSleeve = new Mesh(cubeGeometry, cubeMaterial);
@@ -84,7 +82,7 @@ function init() {
     leftSleeve.receiveShadow = true;
     person.add(leftSleeve); //Add sleeve to group
     console.log("Added leftSleeve to scene...");
-    //Add a rightSleeve to the scene
+    //Create rightSleeve
     cubeGeometry = new CubeGeometry(1, 1, 1);
     cubeMaterial = new LambertMaterial({ color: 0x00ff00 });
     rightSleeve = new Mesh(cubeGeometry, cubeMaterial);
@@ -95,7 +93,7 @@ function init() {
     rightSleeve.receiveShadow = true;
     person.add(rightSleeve); //Add sleeve to group
     console.log("Added rightSleeve to scene...");
-    //Add a leftArm to the Scene
+    //Create leftArm
     cubeGeometry = new CubeGeometry(2, 0.5, 0.5);
     cubeMaterial = new LambertMaterial({ color: 0xffcc99 });
     leftArm = new Mesh(cubeGeometry, cubeMaterial);
@@ -106,7 +104,7 @@ function init() {
     leftArm.receiveShadow = true;
     person.add(leftArm); //Add arm to group
     console.log("Added leftArm to scene...");
-    //Add a rightArm to the Scene
+    //Create rightArm
     cubeGeometry = new CubeGeometry(2, 0.5, 0.5);
     cubeMaterial = new LambertMaterial({ color: 0xffcc99 });
     rightArm = new Mesh(cubeGeometry, cubeMaterial);
@@ -117,7 +115,7 @@ function init() {
     rightArm.receiveShadow = true;
     person.add(rightArm); //Add arm to group
     console.log("Added rightArm to scene...");
-    //Add a leftLeg to the Scene
+    //Create leftLeg
     cubeGeometry = new CubeGeometry(0.5, 2, 0.5);
     cubeMaterial = new LambertMaterial({ color: 0x0000ff });
     leftLeg = new Mesh(cubeGeometry, cubeMaterial);
@@ -128,7 +126,7 @@ function init() {
     leftLeg.receiveShadow = true;
     person.add(leftLeg); //Add leg to group
     console.log("Added leftLeg to scene...");
-    //Add a rightLeg to the Scene
+    //Create rightLeg
     cubeGeometry = new CubeGeometry(0.5, 2, 0.5);
     cubeMaterial = new LambertMaterial({ color: 0x0000ff });
     rightLeg = new Mesh(cubeGeometry, cubeMaterial);
@@ -172,9 +170,9 @@ function init() {
 }
 //Add controls to the controller
 function addControl(controlObject) {
-    gui.add(controlObject, 'rotationSpeedx', -0.01, 0.01);
-    gui.add(controlObject, 'rotationSpeedy', -0.01, 0.01);
-    gui.add(controlObject, 'rotationSpeedz', -0.01, 0.01);
+    gui.add(controlObject, 'rotationSpeedx', 0, 10);
+    gui.add(controlObject, 'rotationSpeedy', 0, 10);
+    gui.add(controlObject, 'rotationSpeedz', 0, 10);
     gui.addColor(controlObject, 'shirtColor');
     gui.addColor(controlObject, 'pantsColor');
 }
@@ -198,9 +196,9 @@ function gameLoop() {
     leftLeg.material.color = new Color(control.pantsColor);
     rightLeg.material.color = new Color(control.pantsColor);
     //set character rotation speed
-    person.rotation.x += control.rotationSpeedx;
-    person.rotation.y += control.rotationSpeedy;
-    person.rotation.z += control.rotationSpeedz;
+    person.rotation.x += control.rotationSpeedx / 1000;
+    person.rotation.y += control.rotationSpeedy / 1000;
+    person.rotation.z += control.rotationSpeedz / 1000;
     renderer.render(scene, camera);
 }
 // Setup default renderer

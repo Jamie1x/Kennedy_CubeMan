@@ -16,7 +16,6 @@ import GUI = dat.GUI;
 import Color = THREE.Color;
 import Vector3 = THREE.Vector3;
 import AxisHelper = THREE.AxisHelper;
-//import Group = THREE.Object3D;
 
 var scene: Scene;
 var renderer: Renderer;
@@ -43,7 +42,6 @@ var control: Control;
 var gui: GUI;
 var stats:Stats;
 var axis: AxisHelper;
-//var group: Group;
 var person = new THREE.Object3D();
 
 function init() {
@@ -58,7 +56,7 @@ function init() {
     axis = new AxisHelper(20);
     scene.add(axis);
     
-    //Add a head to the Scene
+    //Create head
 	sphereGeometry = new SphereGeometry(0.75, 32, 32);
 	sphereMaterial = new LambertMaterial({color:0xffcc99});
 	head = new Mesh(sphereGeometry, sphereMaterial);
@@ -70,7 +68,7 @@ function init() {
 	person.add(head);//Add head to group
 	console.log("Added head to scene...");
     
-    //Add a body to the Scene
+    //Create body
 	cubeGeometry = new CubeGeometry(2, 2.5, 1);
 	cubeMaterial = new LambertMaterial({color:0x00ff00});
 	body = new Mesh(cubeGeometry, cubeMaterial);
@@ -82,7 +80,7 @@ function init() {
 	person.add(body); //Add body to group
 	console.log("Added body to scene...");
     
-    //Add a leftSleeve to the scene
+    //Create leftSleeve
 	cubeGeometry = new CubeGeometry(1, 1, 1);
 	cubeMaterial = new LambertMaterial({color:0x00ff00});
 	leftSleeve = new Mesh(cubeGeometry, cubeMaterial);
@@ -94,7 +92,7 @@ function init() {
 	person.add(leftSleeve);//Add sleeve to group
 	console.log("Added leftSleeve to scene...");
     
-    //Add a rightSleeve to the scene
+    //Create rightSleeve
 	cubeGeometry = new CubeGeometry(1, 1, 1);
 	cubeMaterial = new LambertMaterial({color:0x00ff00});
 	rightSleeve = new Mesh(cubeGeometry, cubeMaterial);
@@ -106,7 +104,7 @@ function init() {
 	person.add(rightSleeve);//Add sleeve to group
 	console.log("Added rightSleeve to scene...");
     
-    //Add a leftArm to the Scene
+    //Create leftArm
 	cubeGeometry = new CubeGeometry(2, 0.5, 0.5);
 	cubeMaterial = new LambertMaterial({color:0xffcc99});
 	leftArm = new Mesh(cubeGeometry, cubeMaterial);
@@ -118,7 +116,7 @@ function init() {
 	person.add(leftArm);//Add arm to group
 	console.log("Added leftArm to scene...");
     
-    //Add a rightArm to the Scene
+    //Create rightArm
 	cubeGeometry = new CubeGeometry(2, 0.5, 0.5);
 	cubeMaterial = new LambertMaterial({color:0xffcc99});
 	rightArm = new Mesh(cubeGeometry, cubeMaterial);
@@ -130,7 +128,7 @@ function init() {
 	person.add(rightArm);//Add arm to group
 	console.log("Added rightArm to scene...");
     
-    //Add a leftLeg to the Scene
+    //Create leftLeg
 	cubeGeometry = new CubeGeometry(0.5, 2, 0.5);
 	cubeMaterial = new LambertMaterial({color:0x0000ff});
 	leftLeg = new Mesh(cubeGeometry, cubeMaterial);
@@ -142,7 +140,7 @@ function init() {
 	person.add(leftLeg);//Add leg to group
 	console.log("Added leftLeg to scene...");
     
-    //Add a rightLeg to the Scene
+    //Create rightLeg
 	cubeGeometry = new CubeGeometry(0.5, 2, 0.5);
 	cubeMaterial = new LambertMaterial({color:0x0000ff});
 	rightLeg = new Mesh(cubeGeometry, cubeMaterial);
@@ -163,7 +161,6 @@ function init() {
 	plane = new Mesh(planeGeometry, planeMaterial);
 	plane.receiveShadow = true;
 	plane.rotation.x = -0.5 * Math.PI;
-	
 	scene.add(plane);
 	console.log("Added Plane Primative to scene...");
     
@@ -195,9 +192,9 @@ function init() {
 
 //Add controls to the controller
 function addControl(controlObject: Control):void {
-	gui.add(controlObject, 'rotationSpeedx',-0.01,0.01);
-    gui.add(controlObject, 'rotationSpeedy',-0.01,0.01);
-    gui.add(controlObject, 'rotationSpeedz',-0.01,0.01);
+	gui.add(controlObject, 'rotationSpeedx',0,10);
+    gui.add(controlObject, 'rotationSpeedy',0,10);
+    gui.add(controlObject, 'rotationSpeedz',0,10);
 	gui.addColor(controlObject, 'shirtColor');
     gui.addColor(controlObject, 'pantsColor');
 }
@@ -224,9 +221,9 @@ function gameLoop():void {
 	leftLeg.material.color = new Color(control.pantsColor);
 	rightLeg.material.color = new Color(control.pantsColor);
     //set character rotation speed
-    person.rotation.x += control.rotationSpeedx;
-    person.rotation.y += control.rotationSpeedy;
-    person.rotation.z += control.rotationSpeedz;
+    person.rotation.x += control.rotationSpeedx / 1000;
+    person.rotation.y += control.rotationSpeedy / 1000;
+    person.rotation.z += control.rotationSpeedz / 1000;
 	
 	renderer.render(scene, camera);
 }

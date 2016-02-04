@@ -192,9 +192,9 @@ function init() {
 
 //Add controls to the controller
 function addControl(controlObject: Control):void {
-	gui.add(controlObject, 'rotationSpeedx',0,10);
-    gui.add(controlObject, 'rotationSpeedy',0,10);
-    gui.add(controlObject, 'rotationSpeedz',0,10);
+	gui.add(controlObject, 'rotationSpeedx',-10,10);
+    gui.add(controlObject, 'rotationSpeedy',-10,10);
+    gui.add(controlObject, 'rotationSpeedz',-10,10);
 	gui.addColor(controlObject, 'shirtColor');
     gui.addColor(controlObject, 'pantsColor');
 }
